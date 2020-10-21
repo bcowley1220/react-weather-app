@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LocationSearch from './Location-Search/Location-Search.js';
+import WeatherCard from './Weather-Card/Weather-Card.js';
 
-function App() {
+const App = (props) => {
+
+  let newsState = useState({
+    newsForm: [
+      
+    ]
+  })
+  let days = useState({
+    day: [
+      {num: 1},
+      {num: 2},
+      {num: 3},
+      {num: 4},
+      {num: 5},
+      {num: 6},
+      {num: 7}
+    ]
+  })
+
+  const [cardVisibilityState, setCardVisibilityState] = useState(false);
+
+  const [weatherLocationState, setWeatherLocationState] = useState({
+    default: 'Commerce Twp, MI',
+    inputLocation: null,
+  })
+
+  let visibleCards = null;
+  if (cardVisibilityState) {
+    visibleCards = (
+      <div>
+        {days[0].day.map((d, index) => {
+          return <WeatherCard stuff={d.num}/>
+        })}
+      </div>
+    )
+  }
+  console.log(days[0].day)
+
+
+      
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <LocationSearch defaultLocation={weatherLocationState.default}/>
+      {visibleCards}
     </div>
-  );
+  )
 }
 
 export default App;
